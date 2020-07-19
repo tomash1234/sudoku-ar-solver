@@ -42,7 +42,7 @@ class LineDetector:
         return merged_lines
 
     def find_lines(self, thresh_image):
-        lines = cv2.HoughLines(thresh_image, 1, np.pi / 180, 200, None, 0, 0)
+        lines = cv2.HoughLines(thresh_image, 1, np.pi / 180, 180, None, 0, 0)
         if lines is None:
             return None
         lines = self.merge_similar_lines(lines)

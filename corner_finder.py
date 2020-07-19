@@ -148,7 +148,7 @@ class CornerFinder:
         for i in range(start, end, inc):
             _, _, line_id = line[i]
             if line_id in self.border_lines_ids:
-                if count < 4:
+                if count < 5:
                     continue
                 return i, line_id
             else:
