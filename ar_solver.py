@@ -35,7 +35,7 @@ class SudokuArSolver:
         mx_size = np.max(image.shape)
         if mx_size > SudokuArSolver.MAX_IMG_SIZE:
             scale = mx_size / SudokuArSolver.MAX_IMG_SIZE
-            return cv2.resize(image, (int(image.shape[0] / scale), int(image.shape[1] / scale)))
+            return cv2.resize(image, (int(image.shape[1] / scale), int(image.shape[0] / scale)))
         return image
 
     def load_pic(self, path):
@@ -64,5 +64,5 @@ class SudokuArSolver:
 
 if __name__ == "__main__":
     solver = SudokuArSolver()
-    solver.load_pic('test_img/4.jpg')
-    # solver.start_camera()
+    # solver.load_pic('test_img/5.jpg')
+    solver.start_camera()

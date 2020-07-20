@@ -3,7 +3,6 @@ import numpy as np
 
 
 class CornerFinder:
-
     BORDER_LINE_THRESHOLD = 70
 
     def __init__(self):
@@ -118,12 +117,16 @@ class CornerFinder:
         first_line = self.lines[point1[1]]
         second_line = self.lines[point2[1]]
 
-        first_points = [None, None]
-        first_points[0] = self.find_cross_point_with_another_border_line(point1[0], first_line, True)
-        first_points[1] = self.find_cross_point_with_another_border_line(point1[0], first_line, False)
-        second_points = [None, None]
-        second_points[0] = self.find_cross_point_with_another_border_line(point2[0], second_line, True)
-        second_points[1] = self.find_cross_point_with_another_border_line(point2[0], second_line, False)
+        first_points = self.find_cross_point_with_another_border_line(point1[0], first_line, False) + \
+                       self.find_cross_point_with_another_border_line(point1[0], first_line, True)
+        second_points = self.find_cross_point_with_another_border_line(point2[0], second_line, False) + \
+                       self.find_cross_point_with_another_border_line(point2[0], second_line, True)
+
+        # first_points[0] = self.find_cross_point_with_another_border_line(point1[0], first_line, True)
+        # first_points[1] = self.find_cross_point_with_another_border_line(point1[0], first_line, False)
+        # second_points = [None, None]
+        # second_points[0] = self.find_cross_point_with_another_border_line(point2[0], second_line, True)
+        # second_points[1] = self.find_cross_point_with_another_border_line(point2[0], second_line, False)
 
         for first in first_points:
             if first is None:
@@ -131,7 +134,7 @@ class CornerFinder:
             for second in second_points:
                 if second is None:
                     continue
-                if first[1] == second[1]:
+                if first[1] == second [1]:
                     return first_line[first[0]][0], second_line[second[0]][0]
 
         return None
@@ -144,28 +147,29 @@ class CornerFinder:
             return self.find_cross_point_with_another_border_line_helper(line, point_index - 1, -1, -1)
 
     def find_cross_point_with_another_border_line_helper(self, line, start, end, inc):
+        cross_points = list()
         count = 0
         for i in range(start, end, inc):
             _, _, line_id = line[i]
             if line_id in self.border_lines_ids:
                 if count < 5:
                     continue
-                return i, line_id
+                cross_points.append((i, line_id))
             else:
                 count += 1
-        return None
+        return cross_points
 
     @staticmethod
     def sort_points(points):
         if points is None:
             return None
         roi = np.zeros((4, 2), dtype="float32")
-        points.sort(key=(lambda p: p[0]**2 + p[1]**2))
+        points.sort(key=(lambda p: p[0] ** 2 + p[1] ** 2))
         roi[0] = points[0]
         roi[2] = points[3]
         points.pop(-1)
         points.pop(0)
-        points.sort(key=(lambda p: p[1]**2))
+        points.sort(key=(lambda p: p[1] ** 2))
         roi[1] = points[0]
         roi[3] = points[1]
         return roi
