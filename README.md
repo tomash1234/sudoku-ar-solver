@@ -9,4 +9,3 @@ Sudoku solver able to solve sudoku and draw the result into a picture or video
 
 ## Known issues
  - Digit recognition is very poor, needs to be improve
- - Sudoku Solving algorithm can compute only simple sudolu 
