@@ -31,8 +31,7 @@ class SudokuSolver:
             if not_used_numbers is None:
                 self.possibilities_rows = None
                 return
-            else:
-                self.possibilities_rows.append(not_used_numbers)
+            self.possibilities_rows.append(not_used_numbers)
 
     def create_columns_possibilities(self):
         for i in range(self.grid_size):
@@ -44,8 +43,7 @@ class SudokuSolver:
             if not_used_numbers is None:
                 self.possibilities_columns = None
                 return
-            else:
-                self.possibilities_columns.append(not_used_numbers)
+            self.possibilities_columns.append(not_used_numbers)
 
     def create_chunks_possibilities(self):
         for i in range(self.grid_size):
@@ -119,6 +117,7 @@ class SudokuSolver:
         start_row = self.chunk_size * (chunk_id // self.chunk_size)
         start_col = int(self.chunk_size * (chunk_id % self.chunk_size))
 
+        number_of_possibilities = 0
         for i in range(start_row, start_row + self.chunk_size):
             for j in range(start_col, start_col + self.chunk_size):
                 num = self.grid[i][j]
@@ -126,7 +125,9 @@ class SudokuSolver:
                     continue
                 candidates = self.get_cell_candidates(i, j)
                 if number in candidates:
-                    return True
+                    number_of_possibilities += 1
+                    if number_of_possibilities > 1:
+                        return True
         return False
 
     def put_new_number(self, row_index, col_index, number):

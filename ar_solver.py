@@ -64,5 +64,5 @@ class SudokuArSolver:
 
 if __name__ == "__main__":
     solver = SudokuArSolver()
-    # solver.load_pic('test_img/5.jpg')
-    solver.start_camera()
+    solver.load_pic('test_img/6.jpg')
+    #solver.start_camera()
